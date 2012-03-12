@@ -20,8 +20,29 @@ class ImportSolid(object):
         else:
             raise RuntimeError
 
+    def build_pair(self):
+        """pair the reads and quality files"""
+        self.r_and_q = []
+        for r in self.raw_reads:
+            q_n = r.rsplit(".", 1)[0]
+            if q_n in self.raw_q:
+                self.r_and_q.append([r, q_n])
+            else:
+                self.r_and_q.append([r, ""])
+
     def analysis_solid(self):
         """docstring for reading_solid"""
+        for r,q in self.r_and_q:
+            try:
+                r_fh = open(r, 'r')
+                q_fh = open(q, 'r') if q
+                for line in r_fh:
+                    pass
+                for line in q_fh:
+                    pass
+            finally:
+                r_fh.close
+                q_fh.close if q_fh
 
 
 class Import(object):
