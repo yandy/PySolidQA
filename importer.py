@@ -110,4 +110,4 @@ class Importer(SolidImporter):
         checker = self.check()
         return self.analysis()
 
-    result = property(_full_process, "Get the result")
+    report = property(_full_process, "Get the report")
