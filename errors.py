@@ -1,8 +1,7 @@
 class SolidError(Exception):
     """docstring for SolidError"""
-    def __init__(self, arg):
-        self.arg = arg
+    def __init__(self, value):
+        self.value = value
 
     def __str__(self):
-        self.arg
-
+        return repr(self.value)
