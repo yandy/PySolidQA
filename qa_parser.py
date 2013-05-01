@@ -66,7 +66,7 @@ class QAParser(object):
                             elem = self.base_qual_dist[idx]
                         except IndexError, e:
                             elem = {}
-                            self.base_qual_dist << elem
+                            self.base_qual_dist.append(elem)
                         finally:
                             if qv in elem:
                                 elem[qv] += 1
