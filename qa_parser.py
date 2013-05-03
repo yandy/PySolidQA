@@ -38,7 +38,7 @@ class QAParser(object):
                     self.valid_len_dist[length] = 1
         except IOError, e:
             raise SolidError("Seqence file not found")
-        finally:
+        else:
             r_fh.close()
 
     def parse_qual(self):
@@ -83,7 +83,7 @@ class QAParser(object):
                     self.read_qual_dist[q_mean] = 1
         except IOError, e:
             raise SolidError("Quality file not found")
-        finally:
+        else:
             q_fh.close()
 
     def parse_seq(self):
@@ -108,7 +108,7 @@ class QAParser(object):
                     idx += 1
         except IOError, e:
             raise SolidError("Seqence file not found")
-        finally:
+        else:
             seq_fh.close()
 
     def _full_parse(self):
