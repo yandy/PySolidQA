@@ -12,12 +12,11 @@ if __name__ == "__main__":
     parser.add_argument("-o", "--output", type = str, required = True, help = "Output file")
     args = parser.parse_args(sys.argv[1:])
     kwargs = vars(args)
-    idx = 0
-    for f in kwargs['inputs']:
-        p = QAParser(f)
+    for idx in range(len(kwargs['inputs'])):
+        p = QAParser(kwargs['inputs'][idx])
         (pre, ext) = os.path.splitext(kwargs['output'])
         output = "%s-%d%s" % (pre, idx, ext)
-        p.report("text", output)
+        p.report('text', output)
         if 'data' in kwargs:
             (pre, ext) = os.path.splitext(kwargs['data'])
             data = "%s-%d%s" % (pre, idx, ext)
