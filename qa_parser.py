@@ -25,6 +25,7 @@ class QAParser(object):
             for line in r_fh:
                 if line.startswith(">") or line.startswith("#"):
                     continue
+                line = line.strip()
                 self.reads_count += 1
                 length = 0
                 for bs in line:
@@ -52,6 +53,7 @@ class QAParser(object):
             for line in q_fh:
                 if line.startswith(">") or line.startswith("#"):
                     continue
+                line = line.strip()
                 qline = [int(qv) for qv in line.split()]
                 q_sum = 0
                 q_len = 0
@@ -93,6 +95,7 @@ class QAParser(object):
             for line in seq_fh:
                 if line.startswith(">") or line.startswith("#"):
                     continue
+                line = line.strip()
                 idx = 0
                 for b in line:
                     try:
