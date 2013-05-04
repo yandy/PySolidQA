@@ -42,10 +42,12 @@ class Translate(object):
                 line = line.strip()
                 fo.write(self._translate_read(line))
                 fo.write("\n")
+        fin.close()
+        fo.close()
 
     def _translate_read(self, read):
         seq = [read[0]]
-        for b in read[1:-1]:
+        for b in read[1:]:
             if b == ".":
                 break
             seq.append(self.color_space[seq[-1]][b])
