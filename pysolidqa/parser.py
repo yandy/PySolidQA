@@ -27,12 +27,14 @@ class Parser(object):
                     continue
                 line = line.strip()
                 self.reads_count += 1
-                length = 0
+                length = -2
                 for bs in line:
                     if bs!= ".":
                         length += 1
                     else:
                         break
+                if length <= 0:
+                    break
                 if length in self.valid_len_dist:
                     self.valid_len_dist[length] += 1
                 else:
