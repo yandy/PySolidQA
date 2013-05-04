@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 if __name__ == "__main__":
-    from qa_parser import QAParser
+    from pysolidqa import Parser
     import sys
     import argparse
     import os.path
@@ -13,7 +13,7 @@ if __name__ == "__main__":
     args = parser.parse_args(sys.argv[1:])
     kwargs = vars(args)
     for idx in range(len(kwargs['inputs'])):
-        p = QAParser(kwargs['inputs'][idx])
+        p = Parser(kwargs['inputs'][idx])
         (pre, ext) = os.path.splitext(kwargs['output'])
         output = "%s-%d%s" % (pre, idx, ext)
         p.report('text', output)

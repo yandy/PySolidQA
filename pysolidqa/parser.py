@@ -5,7 +5,7 @@ import cStringIO
 
 from errors import SolidError
 
-class QAParser(object):
+class Parser(object):
 
     def __init__(self, fn):
         self.reads_fn = "%s.csfasta" % fn
