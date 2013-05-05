@@ -51,4 +51,4 @@ class Translate(object):
             if b == ".":
                 break
             seq.append(self.color_space[seq[-1]][b])
-        return "".join(seq[2:])
+        return "".join(seq)

@@ -29,12 +29,10 @@ class Parser(object):
                 self.reads_count += 1
                 length = -2
                 for bs in line:
-                    if bs!= ".":
+                    if bs != ".":
                         length += 1
                     else:
                         break
-                if length <= 0:
-                    break
                 if length in self.valid_len_dist:
                     self.valid_len_dist[length] += 1
                 else:
@@ -98,7 +96,7 @@ class Parser(object):
                 if line.startswith(">") or line.startswith("#"):
                     continue
                 line = line.strip()
-                idx = 0
+                idx = -2
                 for b in line:
                     try:
                         elem = self.base_type_dist[idx]
