@@ -27,7 +27,7 @@ class Parser(object):
                     continue
                 line = line.strip()
                 self.reads_count += 1
-                length = -2
+                length = -1
                 for bs in line:
                     if bs != ".":
                         length += 1
@@ -95,8 +95,8 @@ class Parser(object):
             for line in seq_fh:
                 if line.startswith(">") or line.startswith("#"):
                     continue
-                line = line.strip()
-                idx = -2
+                line = line.strip()[1:]
+                idx = 0
                 for b in line:
                     try:
                         elem = self.base_type_dist[idx]
