@@ -19,6 +19,7 @@ class Parser(object):
         #the distribution of valid length: how many reads of
         #certain valid length
         self.valid_len_dist = {}
+        self.color_type_dist = []
 
         try:
             r_fh = open(self.reads_fn, "r")
@@ -30,6 +31,17 @@ class Parser(object):
                 length = -1
                 for bs in line:
                     if bs != ".":
+                        if not length < 0:
+                            try:
+                                elem = self.color_type_dist[length]
+                            except IndexError, e:
+                                elem = {}
+                                self.color_type_dist.append(elem)
+                            finally:
+                                if bs in elem:
+                                    elem[bs] += 1
+                                else:
+                                    elem[bs] = 1
                         length += 1
                     else:
                         break
@@ -46,8 +58,6 @@ class Parser(object):
         """parse quality file"""
         # quality distribution based on base position
         self.base_qual_dist = []
-        # the mean quality of per reads distribution
-        self.read_qual_dist = {}
         try:
             q_fh = open(self.qual_fn, "r")
             for line in q_fh:
@@ -79,10 +89,6 @@ class Parser(object):
                     q_mean = float(q_sum/q_len)
                 else:
                     q_mean = 0.0
-                if q_mean in self.read_qual_dist:
-                    self.read_qual_dist[q_mean] += 1
-                else:
-                    self.read_qual_dist[q_mean] = 1
         except IOError, e:
             raise SolidError("Quality file not found")
         else:
@@ -125,8 +131,8 @@ class Parser(object):
         data_dict = {
         'reads_count': self.reads_count,
         'valid_len_dist': self.valid_len_dist,
+        'color_type_dist': self.color_type_dist,
         'base_qual_dist': self.base_qual_dist,
-        'read_qual_dist': self.read_qual_dist,
         'base_type_dist': self.base_type_dist
         }
         try:
@@ -143,14 +149,14 @@ class Parser(object):
         data_dict = json.load(fh)
         if not ('reads_count' in data_dict and
                 'valid_len_dist' in data_dict and
+                'color_type_dist' in data_dict and
                 'base_qual_dist' in data_dict and
-                'read_qual_dist' in data_dict and
                 'base_type_dist' in data_dict):
             raise SolidError("format error")
         self.reads_count = data_dict['reads_count']
         self.valid_len_dist = data_dict['valid_len_dist']
+        self.color_type_dist = data_dict['color_type_dist']
         self.base_qual_dist = data_dict['base_qual_dist']
-        self.read_qual_dist = data_dict['read_qual_dist']
         self.base_type_dist = data_dict['base_type_dist']
 
     def report(self, format, filename = None):
@@ -180,10 +186,12 @@ class Parser(object):
             for k, v in self.base_qual_dist[i].items():
                 out.write("%d:\t%d\n" % (k, v))
         out.write("\n")
-        out.write("## Reads Mean Quality Distribution\n")
-        out.write("quality\treads\n")
-        for k, v in self.read_qual_dist.items():
-            out.write("%f:\t%d\n" % (k, v))
+        out.write("## Color Type Distribution\n")
+        for i in xrange(len(self.color_type_dist)):
+            out.write("#### on position %d:\n" % i)
+            out.write("base\treads\n")
+            for k, v in self.color_type_dist[i].items():
+                out.write("%s:\t%d\n" % (k, v))
         out.write("\n")
         out.write("## Base Type Distribution\n")
         for i in xrange(len(self.base_type_dist)):
