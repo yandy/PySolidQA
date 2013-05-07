@@ -74,7 +74,7 @@ class Translate(object):
             for q in qual:
                 if q < cutoff:
                     break
-                end ++ 1
+                end += 1
             seq = seq[:end]
             if len(seq) < min_len:
                 seq = []
