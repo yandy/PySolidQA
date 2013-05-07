@@ -128,6 +128,8 @@ class Parser(object):
         self.parsed = True
 
     def save(self, filename):
+        if not self.parsed:
+            self._full_parse()
         data_dict = {
         'reads_count': self.reads_count,
         'valid_len_dist': self.valid_len_dist,
